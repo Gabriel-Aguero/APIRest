@@ -2,6 +2,7 @@ import express from "express";
 
 export const app = express();
 
+// middleware
 app.use(express.json());
 
 const items = [{ id: 1, name: "Item 1" }];
@@ -12,7 +13,7 @@ app.get("/items", (req, res) => {
 
 app.get("/items/:id", (req, res) => {
   const { id } = req.params;
-  const itemsFound = items.find((item) => item.id === id);
+  const itemsFound = items.find((item) => item.id === Number(id));
 
   if (itemsFound) {
     res.json(itemsFound);
@@ -31,7 +32,7 @@ app.post("items", (req, res) => {
 app.put("/items/:id", (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
-  const itemIndex = items.findIndex((item) => item.id === id);
+  const itemIndex = items.findIndex((item) => item.id === Number(id));
 
   if (itemIndex !== -1) {
     items[itemIndex].name = content;
@@ -43,7 +44,7 @@ app.put("/items/:id", (req, res) => {
 
 app.delete("items/:id", (req, res) => {
   const { id } = req.params;
-  const itemIndex = items.findIndex((item) => item.id === id);
+  const itemIndex = items.findIndex((item) => item.id === Number(id));
 
   if (itemIndex !== -1) {
     items.splice(itemIndex, 1);
